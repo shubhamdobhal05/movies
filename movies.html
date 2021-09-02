@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label>Movie Name</label>
+    <input type = "text" id = "movies" placeholder="Movie Name"/>
+    <button onclick="myMovies()">Submit</button>
+</body>
+</html>
+
+<script>
+    async function myMovies() {
+        let movie = document.getElementById("movies").value;
+
+        let res = await fetch(`https://www.omdbapi.com/?s=${movie}&apikey=2dc917e5`);
+        let data = await res.json()
+            console.log(data);
+}
+
+
+</script>
