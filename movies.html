@@ -10,16 +10,43 @@
     <label>Movie Name</label>
     <input type = "text" id = "movies" placeholder="Movie Name"/>
     <button onclick="myMovies()">Submit</button>
+    <div id = "data"></div>
 </body>
 </html>
 
 <script>
+
+    let div = document.getElementById("data");
+
     async function myMovies() {
+        
         let movie = document.getElementById("movies").value;
 
         let res = await fetch(`https://www.omdbapi.com/?s=${movie}&apikey=2dc917e5`);
-        let data = await res.json()
-            console.log(data);
+        let data = await res.json();
+       // console.log(data);
+        let movies = data.Search;
+       // console.log(movies)
+         movies.forEach(function(movie) {
+
+        
+            let dataDiv = document.createElement("div");
+
+            let name = document.createElement("p");
+            name.innerHTML = movie.Title;
+
+            let release = document.createElement("p");
+            release.innerHTML = movie.Year;
+
+            let poster = document.createElement("img");
+            poster.src = movie.Poster;
+
+            dataDiv.append(poster, name, release);
+            div.append(dataDiv);
+        })
+
+       
+
 }
 
 
