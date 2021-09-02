@@ -5,11 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: 45% 45%;
+            grid-gap: 40px;
+            background-color: rgb(230, 116, 116);
+        }
+        .input {
+            border: 10px dotted grey;
+            height: 300px;
+            padding: 100px 100px;
+            margin-left: 10px;
+            font-size: xx-large;
+        }
+        div > label {
+            margin-left: 110px;
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        div > input {
+            width: 400px;
+            height: 40px;
+            border-radius: 5px;
+            border: none;
+
+        }
+        div > button {
+            width: 200px;
+            height: 40px;
+            margin-left: 100px;
+            border: none;
+            border-radius: 3px;
+            margin-top: 20px;
+            color: grey;
+            background-color: rgb(33, 235, 241);
+            font-size:large;
+        }
+        #data {
+            border: 10px dotted grey;
+            height: 500px;
+        }
+        img {
+            width: 250px;
+            height: 300px;
+            padding-left: 170px;
+            padding-top: 20px;
+        }
+        p {
+            padding-left: 170px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 20px;
+
+        }
+    </style>
 </head>
 <body>
-    <label>Movie Name</label>
-    <input type = "text" id = "movies" placeholder="Movie Name"/>
-    <button onclick="myMovies()">Submit</button>
+    <div class="input">
+        <label>Movie Name</label><br><br>
+        <input type = "text" id = "movies" placeholder="Movie Name"/><br>
+        <button onclick="myMovies()">Submit</button>
+    </div>
     <div id = "data"></div>
 </body>
 </html>
@@ -17,33 +72,38 @@
 <script>
 
     let div = document.getElementById("data");
+    
 
     async function myMovies() {
         
-        let movie = document.getElementById("movies").value;
+        let movies = document.getElementById("movies").value;
 
-        let res = await fetch(`https://www.omdbapi.com/?s=${movie}&apikey=2dc917e5`);
-        let data = await res.json();
+        let res = await fetch(`http://www.omdbapi.com/?apikey=2dc917e5&t=${movies}
+`);
+        let movie = await res.json();
        // console.log(data);
-        let movies = data.Search;
-       // console.log(movies)
-         movies.forEach(function(movie) {
+       // let movie = data.Search;
+       console.log(movie);
+         
 
-        
+       
             let dataDiv = document.createElement("div");
 
             let name = document.createElement("p");
-            name.innerHTML = movie.Title;
+            name.textContent ="Movie Name:" +  movie.Title;
 
             let release = document.createElement("p");
-            release.innerHTML = movie.Year;
+            release.textContent = "Release Year:" + movie.Year;
 
             let poster = document.createElement("img");
             poster.src = movie.Poster;
 
-            dataDiv.append(poster, name, release);
+            let rating = document.createElement("p");
+            rating.textContent = "Imdb Rating:" + movie.imdbRating;
+
+            dataDiv.append(poster, name, release, rating);
             div.append(dataDiv);
-        })
+        
 
        
 
