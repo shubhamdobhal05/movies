@@ -14,7 +14,7 @@
         }
         .input {
             border: 10px dotted grey;
-            height: 300px;
+            height: 350px;
             padding: 100px 100px;
             margin-left: 10px;
             font-size: xx-large;
@@ -43,7 +43,7 @@
         }
         #data {
             border: 10px dotted grey;
-            height: 500px;
+            height: 550px;
         }
         img {
             width: 250px;
@@ -51,12 +51,17 @@
             padding-left: 170px;
             padding-top: 20px;
         }
-        p {
-            padding-left: 170px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 20px;
+        p, h2 {
+            padding-left: 210px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 17px;
+            color: black;
 
         }
+        h2 {
+            padding-left: 210px !important;
+        }
+        
     </style>
 </head>
 <body>
@@ -73,21 +78,28 @@
 
     let div = document.getElementById("data");
     
+    
+    
 
     async function myMovies() {
+
+        div.innerHTML = null;
         
         let movies = document.getElementById("movies").value;
-
-        let res = await fetch(`http://www.omdbapi.com/?apikey=2dc917e5&t=${movies}
-`);
+        try{
+        let res = await fetch(`http://www.omdbapi.com/?apikey=2dc917e5&t=${movies}`);
         let movie = await res.json();
        // console.log(data);
        // let movie = data.Search;
-       console.log(movie);
+       //console.log(movie);
          
 
        
             let dataDiv = document.createElement("div");
+            //dataDiv.innerHTML = "";
+            
+            
+            
 
             let name = document.createElement("p");
             name.textContent ="Movie Name:" +  movie.Title;
@@ -104,10 +116,24 @@
             dataDiv.append(poster, name, release, rating);
             div.append(dataDiv);
         
+        if(movie.imdbRating > 8.5) {
+            let rec = document.createElement("h2");
+            rec.innerHTML = "**Recommended**";
+            dataDiv.append(rec ,poster, name, release, rating);
+            div.append(dataDiv);
+            
+            
+        }
+    } catch(err) {
+        
+        console.log(err);
+    }
 
-       
-
+        
+        
 }
+
+        
 
 
 </script>
